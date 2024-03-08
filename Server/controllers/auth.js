@@ -53,6 +53,7 @@ export const login = async (req, res) => {
             return res.status(400).json({mssg: 'Incorrect Password'})
         }
         const token = jwt.sign({id: user._id} , process.env.SECRET)
+        res.status(200).json({token , user})
     } catch (err) {
         res.status(500).json({error: err.message})
     }
