@@ -42,7 +42,7 @@ const NavBar = () => {
 
     return <FlexBetween padding="1rem 6%" backgroundColor ={alt}>
         <FlexBetween gap="1.75rem">
-            <Typography fontWeight="bold" fontSize="clamp(1rem , 2rem , 2.25rem"
+            <Typography fontWeight="bold" fontSize="clamp(1rem , 2rem , 2.25rem)"
             color="primary"
             onClick={()=> navigate('/home')}
             sx={{
@@ -79,7 +79,7 @@ const NavBar = () => {
                         <FormControl variant="standard" value={fullName}>
                             <Select value={fullName}
                             sx={{
-                                backgroundColor:neutral,
+                                backgroundColor:neutralLight,
                                 width:"150px",
                                 borderRadius:"0.25rem",
                                 padding:"0.25rem 1rem",
@@ -147,7 +147,7 @@ const NavBar = () => {
                         <FormControl variant="standard" value={fullName}>
                             <Select value={fullName}
                             sx={{
-                                backgroundColor:neutral,
+                                backgroundColor:neutralLight,
                                 width:"150px",
                                 borderRadius:"0.25rem",
                                 padding:"0.25rem 1rem",
