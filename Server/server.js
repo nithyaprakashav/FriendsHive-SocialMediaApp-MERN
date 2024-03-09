@@ -9,8 +9,11 @@ import morgan from 'morgan'
 import path from 'path'
 import {fileURLToPath} from  'url'
 import {register} from './controllers/auth.js'
+import {createPost} from './controllers/posts.js'
 import authRoutes from './Routes/auth.js'
 import userRoutes from './Routes/userRoute.js'
+import postRoutes from './Routes/postRoute.js'
+import { verifyToken } from './middlewares/auth.js'
 
 //Configurations
 const __filename = fileURLToPath(import.meta.url)
@@ -43,10 +46,12 @@ const upload = multer({storage})
 //Routes with Files
 
 app.post('/auth/register' , upload.single('picture') , register)
+app.post('/posts' , verifyToken, upload.single('picture') , createPost)
 
 //Routes
 app.use('/auth', authRoutes)
 app.use('/users', userRoutes)
+app.use('/posts',postRoutes)
 
 //Mongoose setup
 
