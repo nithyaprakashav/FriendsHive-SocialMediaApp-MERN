@@ -1,6 +1,5 @@
-import express from 'express'
+
 import User from '../models/User.js'
-import jwt from 'jsonwebtoken'
 
 export const getUser = async (req , res) => {
     try {
