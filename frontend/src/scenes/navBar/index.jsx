@@ -38,7 +38,8 @@ const NavBar = () => {
     const primaryLight = theme.palette.primary.light
     const alt = theme.palette.background.alt
 
-    const fullName = `${user.firstname} ${user.lastname}`
+    // const fullName = `${user.firstname} ${user.lastname}`
+    const fullName = "Nithya Prakash"
 
     return <FlexBetween padding="1rem 6%" backgroundColor ={alt}>
         <FlexBetween gap="1.75rem">
@@ -120,7 +121,7 @@ const NavBar = () => {
                     minWidth="300px"
                     backgroundColor={background}
                     >
-                        //Close IconButton
+                        {/* Close IconButton */}
                         <Box display="flex" justifyContent="flex-end" p="1rem">
                         <IconButton
                     onClick={()=> setIsMobileMenuToggled(!isMobileMenuToggled)}
