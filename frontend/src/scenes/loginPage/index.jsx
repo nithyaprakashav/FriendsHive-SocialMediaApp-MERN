@@ -28,6 +28,7 @@ const LoginPage = () => {
             >
             Welcome to FriendsHive, where every interaction sparks a new connection!
             </Typography>
+            <Form/>
         </Box>
         </Box>
      );
