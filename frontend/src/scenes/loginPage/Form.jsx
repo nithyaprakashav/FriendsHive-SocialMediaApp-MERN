@@ -17,19 +17,19 @@ import DropZone from 'react-dropzone'
 import FlexBetween from 'components/flexBetween'
 
 const registerSchema = yup.object().shape({
-    firstName: yup.string().required("required"),
-    lastName: yup.string().required("required"),
-    email: yup.string().email("Invalid email Id").required("required"),
-    password: yup.string().required("required"),
-    location: yup.string().required("required"),
-    occupation: yup.string().required("required"),
-    picture: yup.string().required("required"),
+    firstName: yup.string().required("This field is required"),
+    lastName: yup.string().required("This field is required"),
+    email: yup.string().email("Invalid email Id").required("This field is required"),
+    password: yup.string().required("This field is required"),
+    location: yup.string().required("This field is required"),
+    occupation: yup.string().required("This field is required"),
+    picture: yup.string().required("This field is required"),
 })
 
 
 const loginSchema = yup.object().shape({
-    email: yup.string().email("Invalid email Id").required("required"),
-    password: yup.string().required("required"),
+    email: yup.string().email("Invalid email Id").required("This field is required"),
+    password: yup.string().required("This field is required"),
 })
 
 const initialValuesRegister = {
@@ -54,12 +54,61 @@ const Form = () => {
     const{palette} = useTheme()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const isNonMobile = useMediaQuery("min-width: 600px")
+    const isNonMobile = useMediaQuery("(min-width: 600px)")
     const isLogin = pageType === "login"
     const isRegister = pageType === "register"
 
-    const handleSubmit = async (values , onSubmitProps) => {
 
+    const register = async (values , onSubmitProps) => {
+        //this below this allows us to send form info with image
+        const formData = new FormData()
+        for(let value in values){
+            formData.append(value , values[value])
+        }
+        formData.append("picturePath" , values.picture.name)
+
+        const savedUserResponse = await fetch(
+            "http://localhost:3001/auth/register",
+            {
+                method:"POST",
+                body:formData
+            }
+        )
+        const savedUSer = await savedUserResponse.json()
+        onSubmitProps.resetForm()
+
+        if(savedUSer){
+            setPageType("login")
+        }
+    }
+
+    const login = async(values, onSubmitProps) => {
+        const loggedInResponse = await fetch(
+            "http://localhost:3001/auth/login",
+            {
+                method:"POST",
+                headers:{"Content-Type": "application/json"},
+                body:JSON.stringify(values)
+            }
+        )
+        const loggedIn = await loggedInResponse.json()
+        onSubmitProps.resetForm()
+        if(loggedIn){
+            dispatch(
+                setLogin({
+                    user:loggedIn.user,
+                    token:loggedIn.token
+                })
+            )
+            navigate("/home")
+        }
+
+    }
+
+
+    const handleSubmit = async (values , onSubmitProps) => {
+        if(isLogin) await login(values , onSubmitProps)
+        if(isRegister) await register(values , onSubmitProps)
     }
 
     return (
@@ -77,13 +126,13 @@ const Form = () => {
             handleChange ,
             handleSubmit , 
             setFieldValue , 
-            resetForm
+            resetForm,
         })=> (
             <form onSubmit={handleSubmit}>
                 <Box
                 display="grid"
                 gap="30px"
-                gridTemplateColumns="repeat(2 , minmax(0, 1fr))"
+                gridTemplateColumns="repeat(4 , minmax(0, 1fr))"
                 sx={{
                     "& > div":{gridColumn: isNonMobile ? undefined : "span 4"}
                 }}
@@ -147,6 +196,7 @@ const Form = () => {
                                     <Box
                                     {...getRootProps()}
                                     border={`2px dashed ${palette.primary.main}`}
+                                    p="1rem"
                                     sx={{ "&:hover": {cursor: "pointer"}}}
                                     >
                                         <input {...getInputProps()}/>
@@ -166,6 +216,62 @@ const Form = () => {
                         </Box>
                         </>
                     )}
+
+                        <TextField
+                            label="Email"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.email}
+                            name="email"
+                            error={Boolean(touched.email) && Boolean(errors.email)}
+                            helperText={touched.email && errors.email}
+                            sx={{gridColumn: "span 4"}}
+                        />
+                        <TextField
+                            label="Password"
+                            type="password"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.password}
+                            name="password"
+                            error={Boolean(touched.password) && Boolean(errors.password)}
+                            helperText={touched.password && errors.password}
+                            sx={{gridColumn: "span 4"}}
+                        />
+                </Box>
+
+                {/* Buttons */}
+
+                <Box>
+                    <Button
+                    fullWidth
+                    type="submit"
+                    sx={{
+                        m:"2rem 0",
+                        p:"1rem",
+                        backgroundColor:palette.primary.main,
+                        color:palette.background.alt,
+                        "&:hover":{color: palette.primary.main}
+                    }}
+                    >
+                        {isLogin ? "LOGIN" : "REGISTER"}
+                    </Button>
+                    <Typography
+                     onClick={()=>{
+                        setPageType(isLogin ? "register" : "login")
+                        resetForm()
+                     }}
+                     sx={{
+                        textDecoration: "underline",
+                        color: palette.primary.main,
+                        "&:hover": {
+                            cursor:"pointer",
+                            color: palette.primary.light
+                        },
+                     }}
+                    >
+                        {isLogin ? "Don't have an account? Sign Up here": "Already have an account? Login here"}
+                    </Typography>
                 </Box>
             </form>
         )} 
