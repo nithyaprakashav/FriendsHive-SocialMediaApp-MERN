@@ -71,7 +71,7 @@ const Form = () => {
             "http://localhost:3001/auth/register",
             {
                 method:"POST",
-                body:formData
+                body:formData,
             }
         )
         const savedUSer = await savedUserResponse.json()
