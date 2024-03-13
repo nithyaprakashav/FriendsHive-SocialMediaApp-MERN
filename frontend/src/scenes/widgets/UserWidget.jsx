@@ -3,13 +3,12 @@ import {
     EditOutlined,
     LocationOnOutlined,
     WorkOutlineOutlined,
-    Palette
 } from "@mui/icons-material"
 import { Box , Typography , Divider , useTheme } from "@mui/material"
 import UserImage from "components/UserImage"
 import FlexBetween from "components/flexBetween"
 import WidgetWrapper from "components/WidgetWrapper"
-import { UseSelector, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { useEffect , useState } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -25,7 +24,7 @@ const UserWidget = ({userId , picturePath}) => {
     const getUser = async () => {
         const response = await fetch(`http://localhost:3001/users/${userId}`,{
             method:"GET",
-            headers:{authorization : `Bearer ${token}`},  
+            headers:{Authorization : `Bearer ${token}`},  
         })
         const data = await response.json()
         setUser(data)
@@ -75,7 +74,7 @@ const UserWidget = ({userId , picturePath}) => {
                         >
                             {firstName} {lastName}
                         </Typography>
-                        <Typography color={medium}>{friends.length} friends</Typography>
+                        <Typography color={medium}>{friends} friends</Typography>
                     </Box>
                     <ManageAccountsOutlined/>
                 </FlexBetween>
@@ -108,6 +107,7 @@ const UserWidget = ({userId , picturePath}) => {
                 {/* Fourth row */}
                 <Box p="1rem 0">
                     <Typography fontSize="1rem" color={main} fontWeight="500" mb="1rem">Social profiles</Typography>
+                    
                     <FlexBetween gap="1rem" mb="0.5rem">
                         <FlexBetween gap="1rem">
                             <img src="../assets/twitter.png" alt="twitter"/>
@@ -119,9 +119,22 @@ const UserWidget = ({userId , picturePath}) => {
                         <EditOutlined sx={{color:main}}/>
                     </FlexBetween>
 
-                    
+                    <FlexBetween gap="1rem">
+                        <FlexBetween gap="1rem">
+                            <img src="../assets/linkedin.png" alt="linkedin"/>
+                            <Box>
+                                <Typography color={main} fontWeight="500">LinkedIn</Typography>
+                                <Typography color={medium}>Network Platform</Typography>
+                            </Box>
+                        </FlexBetween>
+                        <EditOutlined sx={{color:main}}/>
+                    </FlexBetween>
+
+
                 </Box>
             </FlexBetween>
         </WidgetWrapper>
     )
 }
+
+export default UserWidget
