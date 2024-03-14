@@ -74,10 +74,10 @@ const Form = () => {
                 body:formData,
             }
         )
-        const savedUSer = await savedUserResponse.json()
+        const savedUser = await savedUserResponse.json()
         onSubmitProps.resetForm()
 
-        if(savedUSer){
+        if(savedUser){
             setPageType("login")
         }
     }
