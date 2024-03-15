@@ -4,8 +4,7 @@ import FlexBetween from "components/flexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
-import { UseDispatch , useSelector, UseSelector} from "react-redux";
-import { useAsyncError } from "react-router-dom";
+import { useDispatch , useSelector} from "react-redux";
 import { setPost } from "state";
 
 const PostWidget = ({
