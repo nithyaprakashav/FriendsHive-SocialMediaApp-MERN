@@ -1,5 +1,5 @@
 import { Box , Typography , useTheme } from "@mui/material";
-import Friend from '../../components/Friend'
+import Friend from 'components/Friend'
 import WidgetWrapper from "components/WidgetWrapper"
 import { useEffect } from "react";
 import {  useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,7 @@ const FriendsListWidget = ({userId}) => {
     const friends = useSelector((state)=> state.user.friends)
 
     const getFriends = async () => {
-        const response = await fetch(`http://localhost:3001/${userId}/friends`,{
+        const response = await fetch(`http://localhost:3001/users/${userId}/friends`,{
             method:"GET",
             headers: { Authorization : `Bearer ${token}`}
         })

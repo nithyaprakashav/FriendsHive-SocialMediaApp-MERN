@@ -62,12 +62,9 @@ const Form = () => {
     const register = async (values , onSubmitProps) => {
         //this below this allows us to send form info with image
         const formData = new FormData()
-        formData.append("firstName", values.firstName);
-    formData.append("lastName", values.lastName);
-    formData.append("email", values.email);
-    formData.append("password", values.password);
-    formData.append("location", values.location);
-    formData.append("occupation", values.occupation);
+        for(let value in values){
+            formData.append(value , values[value])
+        }
     // Append the profile picture file
     formData.append("picturePath", values.picture.name);
 
@@ -274,7 +271,7 @@ const Form = () => {
                         },
                      }}
                     >
-                        {isLogin ? "Don't have an account? Sign Up here": "Already have an account? Login here"}
+                        {isLogin ? "Don't have an account? Sign Up here.": "Already have an account? Login here."}
                     </Typography>
                 </Box>
             </form>
