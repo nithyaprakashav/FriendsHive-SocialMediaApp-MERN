@@ -1,12 +1,14 @@
-import { PersonAddOutlined ,PersonRemoveOutlined } from "@mui/icons-material";
+import { PersonAddOutlined ,PersonRemoveOutlined, DeleteOutline } from "@mui/icons-material";
 import { Box , Typography, IconButton , useTheme } from "@mui/material";
 import { useDispatch , useSelector } from "react-redux";
 import { setFriends } from "state";
+import { useNavigate } from "react-router-dom";
 import FlexBetween from "./flexBetween";
 import UserImage from "./UserImage";
-import { useNavigate } from "react-router-dom";
 
-const Friend = ({friendId , name , subtitle ,userPicturePath }) => {
+
+
+const Friend = ({postId , loggedInUserId,friendId , name , subtitle ,userPicturePath }) => {
     
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -15,6 +17,7 @@ const Friend = ({friendId , name , subtitle ,userPicturePath }) => {
     
     const token = useSelector((state)=> state.token)
     const friends = useSelector((state)=> state.user.friends)
+    
     
     const { palette } = useTheme()
     const primaryLight = palette.primary.light
@@ -75,6 +78,13 @@ const Friend = ({friendId , name , subtitle ,userPicturePath }) => {
                     <PersonAddOutlined sx={{color:primaryDark}}/>
                 )}
             </IconButton>}
+            {friendId === loggedInUserId &&
+                <IconButton >
+                
+                <DeleteOutline sx={{color: primaryDark}}/>
+                </IconButton>
+            }
+            
         </FlexBetween>
     )
 }

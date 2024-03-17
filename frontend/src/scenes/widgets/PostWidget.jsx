@@ -47,6 +47,7 @@ const PostWidget = ({
 
         <WidgetWrapper m="2rem 0">
             <Friend
+            loggedInUserId={loggedInUserId}
             friendId={postUserId}
             name={name}
             subtitle={location}
