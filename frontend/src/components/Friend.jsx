@@ -6,11 +6,13 @@ import FlexBetween from "./flexBetween";
 import UserImage from "./UserImage";
 import { useNavigate } from "react-router-dom";
 
-const Friend = ({friendId , name , subtitle ,userPicturePath}) => {
+const Friend = ({friendId , name , subtitle ,userPicturePath }) => {
     
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { _id } = useSelector((state)=> state.user)
+    
+    
     const token = useSelector((state)=> state.token)
     const friends = useSelector((state)=> state.user.friends)
     
@@ -20,7 +22,8 @@ const Friend = ({friendId , name , subtitle ,userPicturePath}) => {
     const main = palette.neutral.main
     const medium = palette.neutral.medium
 
-    const isFriend = friends.find((friend)=> friend._id === friendId)
+    const isFriend = friends.find((friend)=>friend._id === friendId  )
+    const isCurrentUser = _id === friendId
     const patchFriend = async () => {
         const response = await fetch(`http://localhost:3001/users/${_id}/${friendId}`,{
             method:"PATCH",
@@ -62,7 +65,7 @@ const Friend = ({friendId , name , subtitle ,userPicturePath}) => {
                     </Typography>
                 </Box>
             </FlexBetween>
-            <IconButton
+            {!isCurrentUser && <IconButton
             onClick={()=> patchFriend()}
             sx={{backgroundColor: primaryLight , p:"0.6rem"}}       
             >
@@ -71,7 +74,7 @@ const Friend = ({friendId , name , subtitle ,userPicturePath}) => {
                 ) : (
                     <PersonAddOutlined sx={{color:primaryDark}}/>
                 )}
-            </IconButton>
+            </IconButton>}
         </FlexBetween>
     )
 }
